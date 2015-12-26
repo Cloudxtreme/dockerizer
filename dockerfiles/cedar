@@ -8,7 +8,7 @@ ADD /pack /pack
 
 WORKDIR /app
 
-RUN /pack/bin/buildpack /app /cache /env
+RUN /pack/bin/compile /app /cache /env
 
 ENTRYPOINT ["/bin/run"]
 
