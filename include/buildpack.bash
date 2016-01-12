@@ -232,24 +232,20 @@ buildpack-dockerize() {
 buildpack-export() {
   local image=${1:-}
   local namespace=${2:-}
-  local registry=${3:-hub.lastbackend.com}
-  local branch=${4:-latest}
 
   title "Start pushing image to registry"
-  docker tag -f "$image" "$registry/$namespace:$branch"
-  docker push "$registry/$namespace:$branch"
+  docker tag -f "$image" "$namespace"
+  docker push "$namespace"
 }
 
 buildpack-cleanup() {
 
   local image=${1:-}
   local namespace=${2:-}
-  local registry=${3:-hub.lastbackend.com}
-  local branch=${4:-latest}
 
   docker rmi -f "$image"
   if [[ "$namespace" ]]; then
-    docker rmi -f "$registry/$namespace:$branch"
+    docker rmi -f "$namespace"
   fi
 
 }
