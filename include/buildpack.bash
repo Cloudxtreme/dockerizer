@@ -235,30 +235,9 @@ buildpack-export() {
   local image=${1:-}
   local namespace=${2:-}
 
-  local hub=""
-  local username=""
-  local name=""
-  local tag=""
-
-  IFS=':' read -a data <<< "$namespace"
-
-  namespace=${data[0]:-}
-  tag=${data[1]:-}
-
-  IFS='/' read -a data <<< "$namespace"
-
-  if [ "${#data[@]}" -eq 3 ]; then
-    hub=${data[0]:-}
-    username=${data[1]:-}
-    name=${data[2]:-}
-  else
-    hub="hub.lastbackend.com"
-    username=${data[0]:-}
-    name=${data[1:-]}
-  fi
-
   title "Start pushing image to registry"
-  docker tag -f "$image" "$username/$name:$tag"
+  echo "$image  $namespace"
+  docker tag -f "$image" "$namespace"
   docker push "$namespace"
 }
 
