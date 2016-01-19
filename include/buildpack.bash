@@ -220,9 +220,9 @@ buildpack-dockerize() {
     echo "Dockerizer founded"
     unprivileged $build_path/pack/bin/dockerize $build_path
   fi
-
+  
   if ! [[ -f $build_path/Dockerfile ]] && [[ $selected_name != 'docker' ]]; then
-    cat $dockerfile_path/cedar > $build_path/Dockerfile
+    cat $selected_path/Dockerfile > $build_path/Dockerfile
   fi
 
   docker build --rm -t ${build_name} . | indent

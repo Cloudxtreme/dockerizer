@@ -6,9 +6,6 @@ BUILD_TAG ?= dev
 
 build:
 	mkdir -p include/buildpacks
-	cat buildpacks/lastbackend/*/buildpack* | sed 'N;s/\n/ /' > include/buildpacks/lastbackend.txt
-	cat buildpacks/heroku/*/buildpack*      | sed 'N;s/\n/ /' > include/buildpacks/heroku.txt
-	cp -r dockerfiles /tmp/dockerfiles
 	go-bindata include
 	mkdir -p build/linux  && GOOS=linux  go build -ldflags "-X main.Version=$(VERSION)" -o build/linux/$(NAME)
 	mkdir -p build/darwin && GOOS=darwin go build -ldflags "-X main.Version=$(VERSION)" -o build/darwin/$(NAME)
@@ -38,7 +35,6 @@ buildpacks-install:
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
 		-v ${PWD}:/usr/src/dockerizer \
 		-v /tmp/buildpacks:/tmp/buildpacks \
-		-v /opt/lastbackend/buildpacks:/tmp/lastbackend \
 		-w /usr/src/dockerizer \
 		-e IMAGE_NAME=$(IMAGE_NAME) \
 		-e BUILD_TAG=$(BUILD_TAG) -e VERSION=master \
@@ -48,7 +44,6 @@ test:
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
 		-v ${PWD}:/usr/src/dockerizer \
 		-v /tmp/buildpacks:/tmp/buildpacks \
-		-v /opt/lastbackend/buildpacks:/tmp/buildpacks/lastbackend \
 		-w /usr/src/dockerizer \
 		-e IMAGE_NAME=$(IMAGE_NAME) \
 		-e BUILD_TAG=$(BUILD_TAG) -e VERSION=master \
