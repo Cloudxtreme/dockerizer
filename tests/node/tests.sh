@@ -7,8 +7,16 @@ echo "try to detect technology"
 ./dockerizer buildpack detect
 echo "try to build"
 ./dockerizer buildpack build "test-node-plain"
+echo "try to run"
+id=$(docker run -d "test-node-plain")
+echo "wait to stop"
+sleep 10;
+echo "get log"
+docker logs $id
+echo "stop container"
+docker stop $id
 echo "start cleanup system"
-#./dockerizer buildpack cleanup "test-node-plain"
+./dockerizer buildpack cleanup "test-node-plain"
 
 sleep 3;
 echo "start sources clonning"

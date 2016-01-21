@@ -47,7 +47,7 @@ test:
 		-w /usr/src/dockerizer \
 		-e IMAGE_NAME=$(IMAGE_NAME) \
 		-e BUILD_TAG=$(BUILD_TAG) -e VERSION=master \
-		$(NAME) basht tests/*/tests.sh
+		$(NAME) basht tests/run.sh
 
 release: build
 	rm -rf release && mkdir release

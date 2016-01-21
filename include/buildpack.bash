@@ -66,7 +66,7 @@ buildpack-detect() {
   ensure-paths
   [[ "$USER" ]] || randomize-unprivileged
 
-  local vendors=("lastbackend" "heroku" "custom")
+  local vendors=("lastbackend" "custom")
   for vendor in "${vendors[@]}"; do
     if [[ "$selected_name" ]]; then break; fi
     local buildpacks=($buildpack_path/$vendor/*)
@@ -190,7 +190,7 @@ buildpack-dockerize() {
 
   # Try to build with Last.Backend buildpack
   if ! [[ $selected_name ]]; then
-    local vendors=("lastbackend" "heroku" "custom")
+    local vendors=("lastbackend" "custom")
     for vendor in "${vendors[@]}"; do
 
       echo "try to find $vendor buildpack"
